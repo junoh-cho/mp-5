@@ -1,19 +1,15 @@
 import getCollection from '@/db';
 import { redirect, notFound } from 'next/navigation';
 
-
-type AliasRedirectProps = {
-    params: {
-        alias: string;
-    };
+type Params = {
+    alias: string;
 };
 
-export default async function AliasRedirectPage(props: AliasRedirectProps) {
-    const params = await props.params;
-    //params.alias is == /[alias]
+export default async function AliasRedirectPage({ params }: { params: Promise<Params> }) {
+    const resolvedParams = await params;
+
     const collection = await getCollection('urls');
-    console.log(typeof params);
-    const result = await collection.findOne({ alias: params.alias });
+    const result = await collection.findOne({ alias: resolvedParams.alias });
 
     if (!result) {
         notFound();
