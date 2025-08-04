@@ -1,5 +1,5 @@
 import getCollection from '@/db';
-import { redirect } from 'next/navigation';
+import { redirect, notFound } from 'next/navigation';
 
 //params.alias is == /[alias]
 export default async function AliasRedirectPage({ params }: { params: { alias: string } }) {
@@ -7,7 +7,7 @@ export default async function AliasRedirectPage({ params }: { params: { alias: s
     const result = await collection.findOne({ alias: params.alias });
 
     if (!result) {
-        return <h1>404 – Alias not found</h1>;
+        notFound();
     }
 
     redirect(result.url);
