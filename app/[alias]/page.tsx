@@ -8,8 +8,9 @@ type AliasRedirectProps = {
     };
 };
 
-export default async function AliasRedirectPage({ params }: AliasRedirectProps) {
-//params.alias is == /[alias]
+export default async function AliasRedirectPage(props: AliasRedirectProps) {
+    const params = await props.params;
+    //params.alias is == /[alias]
     const collection = await getCollection('urls');
     console.log(typeof params);
     const result = await collection.findOne({ alias: params.alias });
